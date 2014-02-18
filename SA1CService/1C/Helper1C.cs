@@ -114,6 +114,8 @@ namespace _1C
 								break;
 								case "8.2": version = EnumVersion1C.v82;
 								break;
+                                case "8.3": version = EnumVersion1C.v83;
+                                break;
 								default: version = 0;
 								break;
 						}
@@ -177,6 +179,13 @@ namespace _1C
 						pathToExe = @"C:\\Program Files (x86)\1Cv82\common\1cestart.exe";
 					}
 					break;
+                case EnumVersion1C.v83:
+                    pathToExe = @"C:\Program Files\1Cv8\common\1cestart.exe";
+                    if (!File.Exists(pathToExe))
+                    {
+                        pathToExe = @"C:\\Program Files (x86)\1Cv8\common\1cestart.exe";
+                    }
+                    break;
 			}
 			
 			return pathToExe;

@@ -9,10 +9,10 @@
 		<TextBlock
 			Margin="5"
 			TextWrapping="Wrap">
-			web:
+			Сайт:
 			<Hyperlink
-				NavigateUri="http://sites.google.com/site/itmindco/sistema-avtomaticeskogo-obmena-dla-1s-8-h/">
-			http://sites.google.com/site/itmindco/sistema-avtomaticeskogo-obmena-dla-1s-8-h
+				NavigateUri="http://itmindco.azurewebsites.net/">
+			http://itmindco.azurewebsites.net/
 			</Hyperlink></TextBlock>
 		<TextBlock
 			Margin="5"
@@ -25,10 +25,10 @@
 		<TextBlock
 			Margin="5"
 			TextWrapping="Wrap">
-			Manual:
+			Инструкция:
 			<Hyperlink
-				NavigateUri="http://sites.google.com/site/itmindco/sistema-avtomaticeskogo-obmena-dla-1s-8-h/dokumentacia">
-			http://sites.google.com/site/itmindco/sistema-avtomaticeskogo-obmena-dla-1s-8-h/dokumentacia
+				NavigateUri="http://itmindco.azurewebsites.net/?page_id=761">
+			http://itmindco.azurewebsites.net/?page_id=761
 			</Hyperlink></TextBlock>
 	</StackPanel>
 </UserControl>

@@ -29,7 +29,8 @@ namespace _1C
 		v7=1,
 		v8=2,
 		v81=3,
-		v82=4
+		v82=4,
+        v83=5
 	}
 
 	public enum EnumTypeConnection{
