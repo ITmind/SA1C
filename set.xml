@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SA1CConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Version>2</Version>
+  <basesConfig>
+    <BaseConfig>
+      <Name>ТестОбмена</Name>
+      <IP>127.0.0.11</IP>
+      <Port>8001</Port>
+      <NameOfPlan>Полный</NameOfPlan>
+      <CodeOfNode>Центральная</CodeOfNode>
+      <IsArch>false</IsArch>
+      <baseInfo>
+        <Name>ТестОбмена</Name>
+        <Version1C>v82</Version1C>
+        <ConnectionString>File="E:\bases\ТестОбмена";</ConnectionString>
+        <User>Админ</User>
+        <Password>cJipXy7XIJ9/RDVWvr1fUw==</Password>
+        <TypeConnection>COM</TypeConnection>
+      </baseInfo>
+      <status>GetFileFromServer</status>
+      <LastExchangeDate>0001-01-01T00:00:00</LastExchangeDate>
+      <IsCentralDB>false</IsCentralDB>
+    </BaseConfig>
+    <BaseConfig>
+      <Name>ЦБ</Name>
+      <IP>localhost</IP>
+      <Port>8001</Port>
+      <NameOfPlan>Полный</NameOfPlan>
+      <CodeOfNode>М1</CodeOfNode>
+      <IsArch>false</IsArch>
+      <baseInfo>
+        <Name>МАХ1</Name>
+        <Version1C>v82</Version1C>
+        <ConnectionString>Srvr="192.168.0.11";Ref="uppOFC";</ConnectionString>
+        <User>Кулик А. Л.</User>
+        <Password />
+        <TypeConnection>COM</TypeConnection>
+      </baseInfo>
+      <status>LocalLoad</status>
+      <LastExchangeDate>0001-01-01T00:00:00</LastExchangeDate>
+      <IsCentralDB>true</IsCentralDB>
+    </BaseConfig>
+    <BaseConfig>
+      <Name>uppOFC</Name>
+      <IP>192.168.56.2</IP>
+      <NameOfPlan>Полный</NameOfPlan>
+      <CodeOfNode>Самара</CodeOfNode>
+      <IsArch>false</IsArch>
+      <baseInfo>
+        <Name>uppOFC</Name>
+        <Version1C>v81</Version1C>
+        <ConnectionString>Srvr="192.168.0.11";Ref="uppOFC";</ConnectionString>
+        <User>Кулик И.А.</User>
+        <Password>FkbOJRTgkXHsgxDA+qgmbumkGW6RfyRzusZjOjQIGvs=</Password>
+        <TypeConnection>COM</TypeConnection>
+      </baseInfo>
+      <status>Default</status>
+      <LastExchangeDate>0001-01-01T00:00:00</LastExchangeDate>
+      <IsCentralDB>true</IsCentralDB>
+    </BaseConfig>
+  </basesConfig>
+</SA1CConfig>

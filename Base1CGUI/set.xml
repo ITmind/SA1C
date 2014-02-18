@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SA1CConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Version>2</Version>
+  <CheckUpdate>true</CheckUpdate>
+  <SendErrorMessage>false</SendErrorMessage>
+  <SendSuccessMessage>false</SendSuccessMessage>
+  <Email>
+    <SMTPServer>smtp.gmail.com</SMTPServer>
+    <Port>587</Port>
+    <User>itmindco@gmail.com</User>
+    <Password>dTaBjOQGAXKPT5+/xtElVA==</Password>
+    <MailTo>itmindco@gmail.com</MailTo>
+    <EnableSsl>true</EnableSsl>
+  </Email>
+  <DisableUser>None</DisableUser>
+  <DinamycUpdateDB>false</DinamycUpdateDB>
+  <NumOperationRepeat>5</NumOperationRepeat>
+  <NumExchangeRepeat>0</NumExchangeRepeat>
+  <HostSetting>
+    <Protocol>net.tcp</Protocol>
+    <BaseIP>localhost</BaseIP>
+    <Port>8001</Port>
+  </HostSetting>
+  <basesConfig>
+    <BaseConfig>
+      <Name>ТестОбмена</Name>
+      <IP>192.168.0.24</IP>
+      <Port>8001</Port>
+      <NameOfPlan>Полный</NameOfPlan>
+      <CodeOfNode>Тест</CodeOfNode>
+      <IsSave>true</IsSave>
+      <IsLoad>true</IsLoad>
+      <baseInfo>
+        <Name>ТестОбмена</Name>
+        <Version1C>v82</Version1C>
+        <ConnectionString>File="E:\bases\ПЕРЕЯСЛОВКА 2011";</ConnectionString>
+        <User>Админ</User>
+        <Password>cJipXy7XIJ9/RDVWvr1fUw==</Password>
+        <TypeConnection>COM</TypeConnection>
+      </baseInfo>
+      <status>
+        <job>RemoteLoad</job>
+        <jobStatus>Error</jobStatus>
+        <description>Подключение к сокету было прервано. Возможно, это вызвано ошибкой обработки сообщения, превышением времени ожидания на удаленном узле или проблемой с выделенным сетевым ресурсом. Тайм-аут локального сокета: "00:30:00".</description>
+        <currentPosInFile>0</currentPosInFile>
+      </status>
+      <LastExchangeDate>2011-06-10T11:23:48.7393474+11:00</LastExchangeDate>
+      <IsCentralDB>true</IsCentralDB>
+      <JobSheduler>
+        <isEnable>false</isEnable>
+        <Expression>0 0/15 * * * ?</Expression>
+      </JobSheduler>
+    </BaseConfig>
+  </basesConfig>
+</SA1CConfig>

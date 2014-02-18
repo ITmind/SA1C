@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+	x:Class="Base1CGUI.View.AllBaseConfigView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:vm="clr-namespace:Base1CGUI.ViewModel"
+	mc:Ignorable="d">
+	<UserControl.Resources>
+		<DataTemplate
+			x:Key="BaseConfigItem">
+			<Border
+				BorderBrush="#FF0D0D0D"
+				BorderThickness="1"
+				Margin="1">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition
+							Width="*" />
+						<ColumnDefinition
+							Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					
+					<TextBlock
+						Height="23"
+						Text="{Binding SettingName}"
+						Margin="25,5,5,0"
+						FontSize="16"
+						FontStretch="Normal"
+						FontStyle="Normal"
+						FontWeight="Bold" />
+					<StackPanel
+						Orientation="Horizontal"
+						Margin="5,5,5,0"
+						Grid.Row="1">
+						<TextBlock
+							Height="23"
+							Text="Последений обмен:"
+							Margin="5,0,5,0" />
+						<TextBlock
+							Height="23"
+							Text="{Binding Path=LastExchangeDate}" />
+					</StackPanel>
+					<TextBlock
+						Height="23"
+						Text="{Binding Path=LastError}"
+						Foreground="Red"
+						Margin="8,0,5,0"
+						FontWeight="Light"
+						TextWrapping="Wrap"
+						FontStyle="Italic"
+						ClipToBounds="True"
+						TextTrimming="CharacterEllipsis"
+						ToolTip="{Binding Path=LastError}"
+						Grid.Row="2"></TextBlock>
+					
+					<Button
+						Grid.Column="1"
+						Grid.RowSpan="3"
+						HorizontalAlignment="Stretch"
+						Margin="2"
+						VerticalAlignment="Stretch"
+						Command="{Binding Path=StartExchangeCommand}">
+						<ContentControl
+							Template="{StaticResource SyncIcon}" />
+					</Button>
+				</Grid>
+			</Border>
+		</DataTemplate>
+		<Style
+			x:Key="BaseConfigItemStyle"
+			TargetType="{x:Type ListBoxItem}">
+			<Setter
+				Property="HorizontalContentAlignment"
+				Value="Stretch" />
+			<Setter
+				Property="IsSelected"
+				Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+			<Style.Triggers>
+				<MultiTrigger>
+					<MultiTrigger.Conditions>
+						<Condition
+							Property="ItemsControl.AlternationIndex"
+							Value="1" />
+						<Condition
+							Property="IsSelected"
+							Value="False" />
+						<Condition
+							Property="IsMouseOver"
+							Value="False" />
+					</MultiTrigger.Conditions>
+					<Setter
+						Property="Background"
+						Value="#EEEEEEEE" />
+				</MultiTrigger>
+			</Style.Triggers>
+		</Style>
+	</UserControl.Resources>
+	<Grid>
+		<ListBox
+			HorizontalAlignment="Stretch"
+			VerticalAlignment="Stretch"
+			ItemsSource="{Binding Path=AllConfigs}"
+			ItemTemplate="{StaticResource BaseConfigItem}"
+			ItemContainerStyle="{StaticResource BaseConfigItemStyle}"
+			ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+		></ListBox>
+	</Grid>
+</UserControl>

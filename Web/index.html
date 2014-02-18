@@ -1,0 +1,186 @@
+<html>
+<head>
+    <script language="javascript" src="jquery141_min.js"></script>
+</head>
+<body>
+<div id="results">Система автоматического обмена 1С:</div>
+<table id="settingsTable" border="1" width="400"/>
+
+<script language="javascript">
+    $(
+            function () {
+                $.getJSON('http://localhost:8002/WebServ/getallsettings?callback=?', function (data) {
+
+                    //alert(data.length + " user(s)");
+                    for (var i = 0; i < data.length; i++) {
+                        AddRowSettings(data[i]);
+                        //var messageElem = createMessage(data[i]);
+                        //var table = document.getElementById("settingsTable");
+                        //document.body.appendChild(messageElem);
+                    }
+                });
+            });
+
+    var int;
+
+    function AddRowSettings(basesetting) {
+        var tbl = document.getElementById('settingsTable');
+        var lastRow = tbl.rows.length;
+        var iteration = lastRow;
+        var row = tbl.insertRow(lastRow);
+
+        // left cell
+        var cellLeft = row.insertCell(0);
+        cellLeft.id = "lb"+basesetting.Name;
+        cellLeft.innerHTML = '<b>' + basesetting.Name + '</b><br />\
+			Время последнего обмена: ' + formatJSONDate(basesetting.LastExchangeDate) + '<br />\
+			Текущий статус: ' + getJob(basesetting.status) + '<br />'
+
+        // right cell
+        var cellRight = row.insertCell(1);
+        var el = document.createElement('input');
+        el.type = 'button';
+        el.name = 'txtBtn' + iteration;
+        el.id = basesetting.Name;
+        el.size = 40;
+        el.value = 'Запуск';
+
+        el.onclick = keyPressTest;
+        cellRight.appendChild(el);
+    }
+
+    function keyPressTest(e, obj) {
+        var objId;
+        if (obj != null) {
+            objId = obj.id;
+        } else {
+            objId = this.id;
+        }
+        $.getJSON('http://localhost:8002/WebServ/execute?setting='+objId+'&isNew=1', function (data) {});
+				
+        int = setInterval(function(){refreshCell(objId)},100);
+    }
+
+   function refreshCell(name){
+       $.getJSON('http://localhost:8002/WebServ/getallsettings?callback=?', function (data) {
+
+                    //alert(data.length + " user(s)");
+                    for (var i = 0; i < data.length; i++) {
+                        if(data[i].Name = name){
+                            var status = "Идет обмен. Ждите...";
+                            if(data[i].status.jobStatus==1){
+                                status = "Ошибка";
+                                 //clearInterval(int);
+                            }
+                            var cellLeft = document.getElementById('lb'+name);
+                            cellLeft.innerHTML = '<b>'+name+'</b><br />\
+			                '+status+'<br />\
+			                '+getJob(data[i].status);
+                        }
+                        //AddRowSettings(data[i]);
+                    }
+                });
+    }
+
+    function getJob(status){
+        var result;
+		
+        switch(status.job){
+            case 0:
+                if(status.jobStatus==0){
+                    result="Идет обмен данными";
+                }
+                else if(status.jobStatus==1){
+                    result="Ошибка обмена данными: "+status.description;
+                    //clearInterval(int);
+                }
+                else{
+                    result="Обмен данными успешно завершен";
+                    clearInterval(int);
+                }
+                break;
+            case 1:
+                if(status.jobStatus==0){
+                    result="Получение файла";
+                }
+                else if(status.jobStatus==1){
+                    result="Ошибка получения файла: "+status.description;
+                    //clearInterval(int);
+                }
+                else{
+                    result="Файл получен";
+                }
+                break;
+            case 2:
+                if(status.jobStatus==0){
+                    result="Отправка файла";
+                }
+                else if(status.jobStatus==1){
+                    result="Ошибка отправки файла: "+status.description;
+                    //clearInterval(int);
+                }
+                else{
+                    result="Файл отправлен";
+                }
+                break;
+            case 3:
+                if(status.jobStatus==0){
+                    result="Выгрузка в удаленной БД";
+                }
+                else if(status.jobStatus==1){
+                    result="Ошибка выгрузки в удаленной БД: "+status.description;
+                    //clearInterval(int);
+                }
+                else{
+                    result="Выгрузка в удаленной БД успешно завершена";
+                }
+                break;
+            case 4:
+                if(status.jobStatus==0){
+                    result="Загрузка в удаленной БД";
+                }
+                else if(status.jobStatus==1){
+                    result="Ошибка загрузки в удаленной БД: "+status.description;
+                    //clearInterval(int);
+                }
+                else{
+                    result="Загрузка в удаленной БД успешно завершена";
+                }
+                break;
+            case 5:
+                if(status.jobStatus==0){
+                    result="Загрузка в БД";
+                }
+                else if(status.jobStatus==1){
+                    result="Ошибка загрузки в БД: "+status.description;
+                    //clearInterval(int);
+                }
+                else{
+                    result="Загрузка в БД успешно завершена";
+                }
+                break;
+            case 6:
+				//alert(status.jobStatus);
+                if(status.jobStatus==0){
+                    result="Выгрузка в БД";
+                }
+                else if(status.jobStatus==1){
+                    result="Ошибка выгрузки в БД: "+status.description;
+                    //clearInterval(int);
+                }
+                else{
+                    result="Выгрузка в БД успешно завершена";
+                }
+                break;
+        }
+        return result;
+    }
+
+    function formatJSONDate(jsonDate) {
+        var date = new Date(parseInt(jsonDate.substr(6)));
+        return  date.getDate() + '.' + (1 + date.getMonth()) + '.' + date.getFullYear() + '  ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    }
+
+</script>
+</body>
+</html>

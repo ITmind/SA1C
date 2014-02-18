@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+	x:Class="Base1CGUI.View.About" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<StackPanel>
+		<TextBlock
+			Margin="5"
+			FontSize="16"
+			FontWeight="Bold">All right reserved @ITmindCO</TextBlock>
+		<TextBlock
+			Margin="5"
+			TextWrapping="Wrap">
+			web:
+			<Hyperlink
+				NavigateUri="http://sites.google.com/site/itmindco/sistema-avtomaticeskogo-obmena-dla-1s-8-h/">
+			http://sites.google.com/site/itmindco/sistema-avtomaticeskogo-obmena-dla-1s-8-h
+			</Hyperlink></TextBlock>
+		<TextBlock
+			Margin="5"
+			TextWrapping="Wrap">
+			email:
+			<Hyperlink
+				NavigateUri="itmindco@gmail.com">
+			itmindco@gmail.com
+			</Hyperlink></TextBlock>
+		<TextBlock
+			Margin="5"
+			TextWrapping="Wrap">
+			Manual:
+			<Hyperlink
+				NavigateUri="http://sites.google.com/site/itmindco/sistema-avtomaticeskogo-obmena-dla-1s-8-h/dokumentacia">
+			http://sites.google.com/site/itmindco/sistema-avtomaticeskogo-obmena-dla-1s-8-h/dokumentacia
+			</Hyperlink></TextBlock>
+	</StackPanel>
+</UserControl>

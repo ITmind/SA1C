@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+		<DirectoryRef Id="TARGETDIR">
+			<Directory Id="ProgramFilesFolder" Name="PFiles">
+				<Directory Id="INSTALLDIR" Name="SA1C" FileSource="..\Release">
+					<Component Id="Client" Guid="81784CF7-D1A2-41b0-89A8-B071AAF8F8BD" DiskId="1">
+						<File Id="LicenseFile" Name="license.rtf" Source="license.rtf" />
+						<File Id="Base1CGUI.exe" Name="Base1CGUI.exe"/>
+						<File Id="Base1CGUI.exe.config" Name="Base1CGUI.exe.config"/>
+						<File Id="NLog.dll" Name="NLog.dll" />
+						<File Id="SA1CService.dll" Name="SA1CService.dll" />
+						<File Id="Quartz.dll" Name="Quartz.dll" />
+						<File Id="Common.Logging.dll" Name="Common.Logging.dll" />
+						<File Id="HostApplication.exe" Name="HostApplication.exe" />
+						<File Id="ServerHTTP.dll" Name="ServerHTTP.dll" />
+						<File Id="index.html" Name="index.html" />
+						<File Id="jquery141_min.js" Name="jquery141_min.js" />
+						<File Id="HostApplication.exe.config" Name="HostApplication.exe.config" />
+					
+					</Component>
+					
+					<Component Id="InstallService" Guid='ABCE8A2B-8D13-405b-998F-433BD2AC9A76'>
+						<File Id="WindowsServiceSA1C.exe" Name="WindowsServiceSA1C.exe" KeyPath="yes"/>
+						<File Id="WindowsServiceSA1C.exe.config" Name="WindowsServiceSA1C.exe.config"/>
+						<ServiceInstall Id="ABC"
+						                Name="WindowsServiceSA1C"
+						                DisplayName="WindowsServiceSA1C"
+						                Type="ownProcess"
+						                Start="auto"
+						                Arguments="&quot;[INSTALLDIR]"
+						                ErrorControl="normal"
+						                Description="WindowsServiceSA1C"
+						                Account="[SERVICEACCOUNT]"
+						                Password="[SERVICEPASSWORD]"/>
+						<ServiceControl Id="StartWindowsServiceSA1C"
+						                Name="WindowsServiceSA1C" Start="install" Wait="no" />
+						<ServiceControl Id="StopWindowsServiceSA1C" Name="WindowsServiceSA1C"
+						                Stop="both" Wait="yes" Remove="uninstall" />
+						<Condition>WINDOWS_SERVICE</Condition>
+					</Component>
+				
+				</Directory>
+			</Directory>
+	
+		</DirectoryRef>
+		
+		<DirectoryRef Id="DesktopFolder">
+			<Component Id="ClientFolder" Guid="A74CC4A4-A90E-4499-A8A1-CB9DF1692F2B" DiskId="1">
+				<RegistryKey Root="HKCU" Key="SA1C\Shortcut" Action="createAndRemoveOnUninstall">
+					<RegistryValue Name="ClientFolder" Value="1" Type="integer" KeyPath="yes"/>
+				</RegistryKey>
+				<Shortcut Id="ShortcutBase1CGUI"
+				          Name="SA1C"
+				          Description="SA1C"
+				          Target="[INSTALLDIR]Base1CGUI.exe"
+				          WorkingDirectory="INSTALLDIR"/>
+				<Condition>SHORTCUT_DESKTOP</Condition>
+			</Component>
+		</DirectoryRef>
+		
+		<DirectoryRef Id="StartupFolder">
+			<Component Id="ServerStartup" Guid="1C18F918-EFA2-4c8c-A154-F50EA56F9461" DiskId="1">
+				<RegistryKey Root="HKCU" Key="SA1C\Shortcut" Action="createAndRemoveOnUninstall">
+					<RegistryValue Name="ServerStartup" Value="1" Type="integer" KeyPath="yes"/>
+				</RegistryKey>
+				<Shortcut Id="ShortcutHostApplication"
+				          Name="ServerSA1C"
+				          Description="ServerSA1C"
+				          Target="[INSTALLDIR]HostApplication.exe"
+				          WorkingDirectory="INSTALLDIR"/>
+				<Condition>AUTOEXEC_SERVER</Condition>
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+</Wix>

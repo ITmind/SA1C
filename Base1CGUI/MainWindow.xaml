@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window
+	x:Class="Base1CGUI.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="clr-namespace:Base1CGUI.ViewModel"
+	Title="Система автоматического обмена данными"
+	Height="700"
+	Width="700">
+	<Window.Resources>
+		<ResourceDictionary
+			Source="MainWindowResources.xaml" />
+	</Window.Resources>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition
+				Width="221*" />
+			<ColumnDefinition
+				Width="106*" />
+		</Grid.ColumnDefinitions>
+		<Border
+			Style="{StaticResource MainBorderStyle}"
+			Grid.Column="1">
+			<HeaderedContentControl
+				Content="{Binding Path=Commands}"
+				ContentTemplate="{StaticResource CommandsTemplate}"
+				Header="Действия"
+				Style="{StaticResource MainHCCStyle}" />
+		</Border>
+		<Border
+			Style="{StaticResource MainBorderStyle}">
+			<HeaderedContentControl
+				Content="{Binding Path=Workspaces}"
+				ContentTemplate="{StaticResource WorkspacesTemplate}"
+				Header="{Binding Path=DisplayName}"
+				Style="{StaticResource MainHCCStyle}" />
+		</Border>
+	</Grid>
+</Window>

@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+	x:Class="Base1CGUI.View.BaseConfigPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	HorizontalAlignment="Stretch"
+	VerticalAlignment="Stretch">
+	<Grid
+		Name="MainGrid">
+		<ScrollViewer
+			VerticalScrollBarVisibility="Auto">
+			<StackPanel>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+						<RowDefinition
+							Height="*" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition
+							Width="Auto" />
+						<ColumnDefinition
+							Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label
+						Content="Название настройки:"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<TextBox
+						Grid.Column="1"
+						HorizontalAlignment="Stretch"
+						MinWidth="50"
+						Margin="2"
+						Text="{Binding Path=SettingName}" />
+					<Label
+						Content="Адресс сервера (IP):"
+						Grid.Row="1"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<Grid
+						Grid.Column="1"
+						Grid.Row="1">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition
+								Width="*" />
+							<ColumnDefinition
+								Width="Auto" />
+							<ColumnDefinition
+								Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<TextBox
+							HorizontalAlignment="Stretch"
+							MinWidth="50"
+							Margin="2"
+							Text="{Binding Path=IP}" />
+						<Label
+							Content=" порт:"
+							Grid.Column="1"
+							HorizontalAlignment="Left"
+							Margin="2" />
+						<TextBox
+							HorizontalAlignment="Stretch"
+							MinWidth="50"
+							Grid.Column="2"
+							Margin="2"
+							Text="{Binding Path=Port}" />
+					</Grid>
+					<Label
+						Content="Строка соединения:"
+						Grid.Row="2"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<Grid
+						Grid.Column="1"
+						Grid.Row="2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition
+								Width="*" />
+							<ColumnDefinition
+								Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<TextBox
+							HorizontalAlignment="Stretch"
+							MinWidth="50"
+							Margin="2"
+							Text="{Binding Path=ConnectionString}" />
+						<Button
+							Grid.Column="1"
+							Content="..."
+							Margin="2"
+							MinWidth="20"
+							Command="{Binding Path=SelectConectionString}" />
+					</Grid>
+					<Label
+						Content="Пользователь:"
+						Grid.Row="3"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<TextBox
+						Grid.Column="1"
+						Grid.Row="3"
+						HorizontalAlignment="Stretch"
+						MinWidth="50"
+						Margin="2"
+						Text="{Binding Path=baseInfo.User}" />
+					<Label
+						Content="Пароль:"
+						Grid.Row="4"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<PasswordBox
+						Grid.Column="1"
+						Grid.Row="4"
+						HorizontalAlignment="Stretch"
+						MinWidth="50"
+						Margin="2"
+						PasswordChanged="PasswordBox_PasswordChanged"
+						Password="1111111111111111"
+						Name="passwordBox1"
+						GotFocus="passwordBox1_GotFocus"
+						MouseEnter="passwordBox1_MouseEnter" />
+					<Label
+						Content="Версия 1С:"
+						Grid.Row="5"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<ComboBox
+						Grid.Column="1"
+						Grid.Row="5"
+						HorizontalAlignment="Stretch"
+						MinWidth="50"
+						Margin="2"
+						ItemsSource="{Binding Path=EnumVersion}"
+						Text="{Binding Path=baseInfo.Version1C}" />
+					<Label
+						Content="План обмена:"
+						Grid.Row="6"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<Grid
+						Grid.Column="1"
+						Grid.Row="6">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition
+								Width="*" />
+							<ColumnDefinition
+								Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<TextBox
+							HorizontalAlignment="Stretch"
+							MinWidth="50"
+							Margin="2"
+							Text="{Binding Path=NameOfPlan}" />
+						<Button
+							Grid.Column="1"
+							Content="..."
+							Margin="2"
+							MinWidth="20"
+							Command="{Binding Path=SelectPlan}" />
+					</Grid>
+					<Label
+						Content="Узел обмена:"
+						Grid.Row="7"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<Grid
+						Grid.Column="1"
+						Grid.Row="7">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition
+								Width="*" />
+							<ColumnDefinition
+								Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<TextBox
+							HorizontalAlignment="Stretch"
+							MinWidth="50"
+							Margin="2"
+							Text="{Binding Path=CodeOfNode}" />
+						<Button
+							Grid.Column="1"
+							Content="..."
+							Margin="2"
+							MinWidth="20"
+							Command="{Binding Path=SelectNode}" />
+					</Grid>
+					<Label
+						Content="Правила выгрузки:"
+						Grid.Row="8"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<Grid
+						Grid.Column="1"
+						Grid.Row="8">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition
+								Width="*" />
+							<ColumnDefinition
+								Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<TextBox
+							HorizontalAlignment="Stretch"
+							MinWidth="50"
+							Margin="2"
+							Text="{Binding Path=FilenameRules}" />
+						<Button
+							Grid.Column="1"
+							Content="..."
+							Margin="2"
+							MinWidth="20"
+							Command="{Binding Path=SelectRulesPatch}" />
+					</Grid>
+					<Label
+						Content="Это центральная база:"
+						Grid.Row="9"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<CheckBox
+						Grid.Column="1"
+						Grid.Row="9"
+						HorizontalAlignment="Left"
+						Margin="10"
+						HorizontalContentAlignment="Left"
+						VerticalAlignment="Center"
+						IsChecked="{Binding Path=IsCentralDB}" />
+					<Label
+						Content="Выполнять выгрузку:"
+						Grid.Row="10"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<CheckBox
+						Grid.Column="1"
+						Grid.Row="10"
+						HorizontalAlignment="Left"
+						Margin="10"
+						HorizontalContentAlignment="Left"
+						VerticalAlignment="Center"
+						IsChecked="{Binding Path=baseConfig.IsSave}" />
+					<Label
+						Content="Выполнять загрузку:"
+						Grid.Row="11"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<CheckBox
+						Grid.Column="1"
+						Grid.Row="11"
+						HorizontalAlignment="Left"
+						Margin="10"
+						HorizontalContentAlignment="Left"
+						VerticalAlignment="Center"
+						IsChecked="{Binding Path=baseConfig.IsLoad}" />
+					<Label
+						Content="Использовать расписание:"
+						Grid.Row="12"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<CheckBox
+						Grid.Column="1"
+						Grid.Row="12"
+						HorizontalAlignment="Left"
+						Margin="10"
+						HorizontalContentAlignment="Left"
+						VerticalAlignment="Center"
+						IsChecked="{Binding Path=IsShedulerEnable}" />
+					<Label
+						Content="Расписание:"
+						Grid.Row="13"
+						HorizontalAlignment="Left"
+						Margin="2" />
+					<TextBox
+						Grid.Column="1"
+						Grid.Row="13"
+						HorizontalAlignment="Stretch"
+						MinWidth="50"
+						Margin="2"
+						ToolTip="Формат: [сек] [мин] [час] [день месяца] [месяц] [день недели]. Пример: 0 0 0/2 * * ? - каждые два часа"
+						Text="{Binding Path=Expression}" />
+					<!--
+                    <Label Content="Название базы 1С:" Grid.Row="9" HorizontalAlignment="Right" Margin="0"/>
+                    <Label Content="Сервер:" Grid.Row="10" HorizontalAlignment="Right" Margin="0"/>
+                    <Label Content="Строка соединения:" Grid.Row="11" HorizontalAlignment="Right" Margin="0"/>
+                    <Label Content="{Binding Path=baseInfo.PathToDB}" Grid.Row="9" Grid.Column="1" />
+                    <Label Content="{Binding Path=baseInfo.ServerName}" Grid.Row="10" Grid.Column="1"/>
+                    <Label Content="{Binding Path=baseInfo.ConnectionStringConsole}" Grid.Row="11" Grid.Column="1"/>
+                    -->
+				</Grid>
+			</StackPanel>
+		</ScrollViewer>
+	</Grid>
+</UserControl>
