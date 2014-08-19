@@ -270,6 +270,7 @@ namespace SA1CService
 			var baseConfig = GetBaseConfig(settingName);
 			baseConfig.status.job = job;
 			baseConfig.status.jobStatus = JobStatus.Process;
+            baseConfig.status.currentPosInFile = 0;
 			SaveSettings();
 
 			Process(settingName);
