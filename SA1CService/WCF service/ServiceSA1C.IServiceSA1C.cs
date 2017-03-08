@@ -1,10 +1,9 @@
-﻿using System;
+﻿// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.Text;
 using System.Threading;
 
 using _1C;
@@ -130,26 +129,18 @@ namespace SA1CService
 						{
 							configChanged = true;
 						}
-						else{
-							
-							//isError = true;
-						}
 
 					}
 					else
 					{
 						e = error.Message;
-						//SetCurrentStatus(settingName,Job.LocalLoad, JobStatus.Error, e);
-						
 					}
 					
 					isError = true;
 					SetCurrentStatus(settingName,Job.LocalLoad, JobStatus.Error, e);
 					theEvent = new LogEventInfo(LogLevel.Error, logger.Name, e);
 					theEvent.Properties["SettingsName"] = settingName;
-					logger.Log(theEvent);
-					//logger.Error(e);
-					
+					logger.Log(theEvent);					
 				}
 
 			}
@@ -206,13 +197,11 @@ namespace SA1CService
 				LogEventInfo theEvent = new LogEventInfo(LogLevel.Debug, logger.Name, settingName+": GetStatus job: "+_status.job+" jobstatus:"+_status.jobStatus+" description:"+_status.description);
 				theEvent.Properties["SettingsName"] = settingName;
 				logger.Log(theEvent);
-				//logger.Debug(settingName+": GetStatus job: "+_status.job+" jobstatus:"+_status.jobStatus+" description:"+_status.description);
 			}
 			catch(Exception e){
 				LogEventInfo theEvent = new LogEventInfo(LogLevel.Error, logger.Name, settingName+": Ошибка получения статуса: "+e.Message);
 				theEvent.Properties["SettingsName"] = settingName;
 				logger.Log(theEvent);
-				//logger.Error(settingName+": Ошибка получения статуса: "+e.Message);
 				_status.job = Job.Exchange;
 				_status.jobStatus = JobStatus.Error;
 				_status.description = e.Message;
@@ -371,16 +360,24 @@ namespace SA1CService
 						break;
 				}//switch
 				
-				logger.Debug("Проверим, выполнилась ли задача");
+				//logger.Debug("Проверим, выполнилась ли задача");
 				//status = GetCurrentStatus(settingName);
 				if(status.jobStatus == JobStatus.Error){
 					theEvent = new LogEventInfo(LogLevel.Error, logger.Name, status.job +" : "+status.description);
 					theEvent.Properties["SettingsName"] = settingName;
 					logger.Log(theEvent);
-					
-					numRepeate += 1;
+
+                    //если ошибка получения статуса, то никаких попыток более
+                    if (status.job == Job.Exchange)
+                    {
+                        numRepeate = config.NumOperationRepeat + 1;
+                    }
+                    else
+                    {
+                        numRepeate += 1;
+                    }
 					//подождем секунду
-					Thread.Sleep(1000);
+					Thread.Sleep(4000);
 					theEvent = new LogEventInfo(LogLevel.Warn, logger.Name, numRepeate.ToString() + " повтор задачи "+status.job);
 					theEvent.Properties["SettingsName"] = settingName;
 					logger.Log(theEvent);
@@ -507,136 +504,6 @@ namespace SA1CService
 		}
 
 
-		#endregion
-
-		#region Private Members
-
-		/// <summary>
-		/// Обмен с базой, являющейся центральной по отношению к данной
-		/// </summary>
-		/// <param name="settingName"></param>
-		void ExecuteExchangeWithCB(string settingName)
-		{
-			//fMail mail = new Mail();
-			Logger logger = LogManager.GetCurrentClassLogger();
-			try
-			{
-				string answer = "";
-				//выгрузка в удаленной базе
-				RemoteSaveChanges(settingName);
-				
-				//прием файла
-				LoadFileFromServer(settingName);
-				
-				//загрузка в локальную базу
-				LoadChanges(settingName);
-				
-				if (answer != "ok")
-				{
-					throw new Exception("загрузки изменений: " + answer);
-				}
-				
-				//выгрузка из локальной базы
-				SaveChanges(settingName);
-				if (answer != "ok")
-				{
-					throw new Exception("выгрузки изменений: " + answer);
-				}
-
-				//передача файла
-				UploadFileToServer(settingName);
-
-				//загрузка в удаленной базе
-				RemoteLoadChanges(settingName);
-
-				if(config.SendSuccessMessage){
-					Mail.SendMail(config.Email,"Обмен по настройке "+settingName+" завершен успешно","Обмен по настройке "+settingName+" завершен успешно");
-				}
-				
-				var baseConfig = GetBaseConfig(settingName);
-				baseConfig.LastExchangeDate = DateTime.Now;
-				SaveSettings();
-				
-				//OnExchangeProcess(Status.ExchangeComplite, false);
-				logger.Info("Обмен по настройке "+settingName+" завершен успешно");
-			}
-			catch (Exception ex)
-			{
-				logger.Error("Ошибка: " + ex.Message);
-				
-				if(config.SendErrorMessage){
-					Mail.SendMail(config.Email,"Ошибка обмена по настройке "+settingName,"Ошибка: " + ex.Message);
-				}
-				
-				//OnExchangeProcess(Status.Error, false, ex.Message);
-			}
-		}
-
-		/// <summary>
-		/// Обмен с базой, являющейся перефирийной по отношению к данной
-		/// </summary>
-		/// <param name="settingName"></param>
-		void ExecuteExchangeWithNotCB(string settingName)
-		{
-			//Mail mail = new Mail();
-			string answer = "";
-			Logger logger = LogManager.GetCurrentClassLogger();
-			try
-			{
-				//выгрузка из локальной базы
-				SaveChanges(settingName);
-				if (answer != "ok")
-				{
-					//logger.Error("Ошибка выгрузки из локальной базы: " + answer);
-					//OnExchangeProcess(Status.Error, false,answer);
-					//return;
-					throw new Exception("выгрузки изменений: " + answer);
-				}
-
-				//передача файла
-				UploadFileToServer(settingName);
-
-				//загрузка в удаленной базе
-				RemoteLoadChanges(settingName);
-
-				//выгрузка в удаленной базе
-				RemoteSaveChanges(settingName);
-
-				//прием файла
-				LoadFileFromServer(settingName);
-
-				//загрузка в локальную базу
-				LoadChanges(settingName);
-				if (answer != "ok")
-				{
-					//logger.Error("Ошибка загрузки изменений в локальной базе: " + answer);
-					//OnExchangeProcess(Status.Error, false,answer);
-					//return;
-					throw new Exception("загрузки изменений: " + answer);
-				}
-				
-				if(config.SendSuccessMessage){
-					Mail.SendMail(config.Email,"Обмен по настройке "+settingName+" завершен успешно","Обмен по настройке "+settingName+" завершен успешно");
-				}
-				
-				var baseConfig = GetBaseConfig(settingName);
-				baseConfig.LastExchangeDate = DateTime.Now;
-				SaveSettings();
-				
-				//OnExchangeProcess(Status.ExchangeComplite, false);
-				logger.Info("Обмен по настройке "+settingName+" завершен успешно");
-			}
-			catch (Exception ex)
-			{
-				logger.Error("Ошибка: " + ex.Message);
-				
-				if(config.SendErrorMessage){
-					Mail.SendMail(config.Email,"Ошибка обмена по настройке "+settingName,"Ошибка: " + ex.Message);
-				}
-				
-				//OnExchangeProcess(Status.Error, false,ex.Message);
-			}
-		}
 		#endregion
 
 	}

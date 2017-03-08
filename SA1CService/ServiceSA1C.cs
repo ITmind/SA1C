@@ -317,10 +317,17 @@ namespace SA1CService
 		
 		public Status WaitServerJob(string settingName){
 			Status _status = RemoteGetCurrentStatus(settingName);
-			while(_status.jobStatus == JobStatus.Process){
-				Thread.Sleep(30000); //подождем 30 секунд
+            //будем пытаться 1 минуту в случае ошибки
+            int numError = 1;
+            bool isErrorGetStatus = _status.jobStatus == JobStatus.Error && _status.job == Job.Exchange;
+
+			while(_status.jobStatus == JobStatus.Process || isErrorGetStatus){
+				Thread.Sleep(10000); //подождем 10 секунд
 				_status = RemoteGetCurrentStatus(settingName);
-			}
+                isErrorGetStatus = _status.jobStatus == JobStatus.Error && _status.job == Job.Exchange;
+                if (numError > 6) isErrorGetStatus = false;
+                numError++;
+            }
 			return _status;
 		}
 		
