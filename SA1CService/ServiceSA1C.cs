@@ -316,7 +316,9 @@ namespace SA1CService
 		}
 		
 		public Status WaitServerJob(string settingName){
-			Status _status = RemoteGetCurrentStatus(settingName);
+            Thread.Sleep(2000);
+
+            Status _status = RemoteGetCurrentStatus(settingName);
             //будем пытаться 1 минуту в случае ошибки
             int numError = 1;
             bool isErrorGetStatus = _status.jobStatus == JobStatus.Error && _status.job == Job.Exchange;
